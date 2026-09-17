@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(timeout 5 npm start)",
+      "Bash(curl -X POST http://localhost:3001/api/search-trends -H 'Content-Type: application/json' -d '{\"niche\": \"gaming\"}')",
+      "Bash(tasklist)",
+      "PowerShell(Get-Process node)",
+      "PowerShell(Stop-Process -Force)",
+      "Bash(git init *)",
+      "Bash(git config *)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'Initial commit: Trending detector Phase 1 with intelligent anomaly detection *)"
+    ]
+  }
+}

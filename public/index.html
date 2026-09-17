@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detector de Tendências 🎯</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        input[type="text"] {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            width: 250px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-search {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-search:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-more {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-more:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-more:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            padding: 40px;
+            font-size: 1.2em;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge-likelihood {
+            background: #667eea;
+            color: white;
+        }
+
+        .badge-platforms {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .card-summary {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .btn-expand {
+            width: 100%;
+            padding: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-expand:hover {
+            background: #764ba2;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.8em;
+            color: #333;
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .method-section {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .method-title {
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .method-data {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .data-item {
+            margin: 8px 0;
+            padding: 5px 0;
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .empty {
+            text-align: center;
+            color: #999;
+            padding: 40px;
+            font-size: 1.1em;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            input[type="text"] {
+                width: 100%;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .modal-content {
+                margin: 20px;
+                max-height: 90vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Detector de Tendências</h1>
+            <p class="subtitle">Encontre as tendências emergentes em tempo real</p>
+        </header>
+
+        <div class="controls">
+            <input type="text" id="nicheInput" placeholder="Exemplo: gaming, tech, crypto..." value="gaming">
+            <button class="btn-search" onclick="searchTrends()">Nova Busca</button>
+            <button class="btn-more" id="moreBtn" onclick="generateMore()" disabled>Gerar Mais</button>
+        </div>
+
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            Buscando tendências...
+        </div>
+
+        <div id="error" class="error" style="display: none;"></div>
+
+        <div id="grid" class="grid"></div>
+
+        <div id="empty" class="empty" style="display: none;">
+            Clique em "Nova Busca" para encontrar tendências
+        </div>
+    </div>
+
+    <!-- Modal para detalhes -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle"></h2>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentTrends = [];
+
+        async function searchTrends() {
+            const niche = document.getElementById('nicheInput').value || 'gaming';
+            await fetchTrends(niche);
+        }
+
+        async function generateMore() {
+            const niche = document.getElementById('nicheInput').value || 'gaming';
+            await fetchTrends(niche);
+        }
+
+        async function fetchTrends(niche) {
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const grid = document.getElementById('grid');
+            const empty = document.getElementById('empty');
+
+            loading.style.display = 'block';
+            error.style.display = 'none';
+            grid.innerHTML = '';
+            empty.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/search-trends', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ niche })
+                });
+
+                if (!response.ok) throw new Error('Erro na busca');
+
+                const data = await response.json();
+                currentTrends = data.mega_trends || [];
+
+                loading.style.display = 'none';
+
+                if (currentTrends.length === 0) {
+                    empty.style.display = 'block';
+                    return;
+                }
+
+                renderTrends();
+                document.getElementById('moreBtn').disabled = false;
+
+            } catch (err) {
+                loading.style.display = 'none';
+                error.style.display = 'block';
+                error.textContent = `❌ Erro: ${err.message}`;
+                console.error('Erro:', err);
+            }
+        }
+
+        function renderTrends() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+
+            currentTrends.forEach(trend => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-title">${escapeHtml(trend.name)}</div>
+                        <div class="card-meta">
+                            <span class="badge badge-likelihood">📈 ${Math.round(trend.likelihood)}%</span>
+                            <span class="badge badge-platforms">🌐 ${trend.platforms} plataformas</span>
+                        </div>
+                    </div>
+                    <div class="card-summary">
+                        <strong>Status:</strong> ${escapeHtml(trend.growth)}<br>
+                        <strong>Métodos:</strong> ${trend.data ? Object.keys(trend.data).filter(k => Array.isArray(trend.data[k]) && trend.data[k].length > 0).length : 0} ativos
+                    </div>
+                    <button class="btn-expand" data-trend='${JSON.stringify(trend).replace(/'/g, "&apos;")}' onclick="openModalFromData(this)">
+                        Ver Detalhes
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openModalFromData(button) {
+            const trendStr = button.getAttribute('data-trend');
+            const trend = JSON.parse(trendStr);
+            openModal(trend);
+        }
+
+        function openModal(trend) {
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+
+            modalTitle.textContent = escapeHtml(trend.name);
+
+            let html = '';
+            if (trend.data) {
+                const methods = {
+                    'google_trends': '🔍 Google Trends',
+                    'youtube_iguana': '🎬 YouTube (VidIQ)',
+                    'google_autocomplete': '🌐 Google Autocomplete',
+                    'youtube_autocomplete': '▶️ YouTube Autocomplete'
+                };
+
+                Object.entries(methods).forEach(([key, label]) => {
+                    if (trend.data[key] && trend.data[key].length > 0) {
+                        html += `<div class="method-section">
+                            <div class="method-title">${label}</div>
+                            <div class="method-data">`;
+
+                        trend.data[key].forEach(item => {
+                            if (item.query) {
+                                html += `<div class="data-item">• ${escapeHtml(item.query)}</div>`;
+                            } else if (item.title) {
+                                html += `<div class="data-item"><strong>${escapeHtml(item.title)}</strong><br>📊 ${item.views || 0} views | 🚀 ${item.vph || 0} VPH</div>`;
+                            }
+                        });
+
+                        html += `</div></div>`;
+                    }
+                });
+            }
+
+            modalBody.innerHTML = html || '<p class="empty">Nenhum dado disponível</p>';
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Fechar modal ao clicar fora
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') closeModal();
+        });
+    </script>
+</body>
+</html>

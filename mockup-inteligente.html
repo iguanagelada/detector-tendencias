@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Trends Gaming - Versão Inteligente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0e27;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 1.05em;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .section {
+            background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid #2a2f4a;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .section-header {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+
+        .section-icon {
+            font-size: 1.5em;
+        }
+
+        .mega-trend {
+            padding: 25px;
+            border-bottom: 1px solid #2a2f4a;
+            transition: all 0.3s ease;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .mega-trend:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateX(5px);
+        }
+
+        .mega-trend-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fire-icon {
+            font-size: 1.8em;
+            animation: flicker 2s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .trend-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .meta-item {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+
+        .meta-label {
+            color: #aaa;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .meta-value {
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .growth-badge {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .likelihood-bar {
+            background: #2a2f4a;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .likelihood-fill {
+            background: linear-gradient(90deg, #ff6b6b 0%, #ffa500 100%);
+            height: 100%;
+            animation: slideIn 1s ease;
+        }
+
+        @keyframes slideIn {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .star {
+            color: #ffa500;
+            margin-right: 2px;
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .platform-badge {
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid #667eea;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .platform-badge.active {
+            background: rgba(102, 126, 234, 0.4);
+            border-color: #667eea;
+        }
+
+        .action-box {
+            background: rgba(255, 107, 107, 0.1);
+            border-left: 4px solid #ff6b6b;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        .action-box strong {
+            color: #ff6b6b;
+        }
+
+        .action-list {
+            list-style: none;
+            margin: 10px 0 0 0;
+            padding-left: 20px;
+        }
+
+        .action-list li {
+            margin: 8px 0;
+            position: relative;
+        }
+
+        .action-list li:before {
+            content: "→";
+            position: absolute;
+            left: -15px;
+            color: #ff6b6b;
+        }
+
+        .trend-item {
+            padding: 20px;
+            border-bottom: 1px solid #2a2f4a;
+            border-left: 3px solid #667eea;
+        }
+
+        .trend-item:last-child {
+            border-bottom: none;
+        }
+
+        .trend-item:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .trend-title {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .anomaly-score {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .anomaly-score.critical {
+            background: #ff0000;
+        }
+
+        .anomaly-score.high {
+            background: #ff6b6b;
+        }
+
+        .anomaly-score.medium {
+            background: #ffa500;
+        }
+
+        .timeline-section {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            padding: 12px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 6px;
+        }
+
+        .timeline-date {
+            color: #667eea;
+            font-weight: 700;
+            min-width: 120px;
+        }
+
+        .timeline-event {
+            color: #ccc;
+            flex: 1;
+        }
+
+        .timeline-arrow {
+            text-align: center;
+            color: #667eea;
+            margin: 5px 0;
+            font-size: 1.2em;
+        }
+
+        .eta-box {
+            background: #ff6b6b;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .tag {
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+        }
+
+        @media (max-width: 768px) {
+            .trend-meta {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <h1><span>🎮</span> Trends Gaming - Inteligente</h1>
+            <p class="subtitle">Detecta tendências EMERGENTES em tempo real (não o que já é grande)</p>
+
+            <div class="controls">
+                <button class="btn btn-primary">
+                    <span>🔍</span> Buscar Tendências Emergentes
+                </button>
+            </div>
+        </header>
+
+        <!-- MEGA TRENDS SECTION -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon fire-icon">🔥</span>
+                MEGA TRENDS - Aparecendo em Múltiplas Plataformas Simultaneamente
+            </div>
+
+            <!-- MEGA TREND 1 -->
+            <div class="mega-trend">
+                <div class="mega-trend-title">
+                    <span class="fire-icon">🔥</span>
+                    Game Development with Generative AI
+                </div>
+
+                <div class="trend-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Força (Plataformas)</div>
+                        <div class="meta-value">⭐⭐⭐⭐⭐ (5/5)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Likelihood Viral</div>
+                        <div class="meta-value">92%</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Primeira Aparição</div>
+                        <div class="meta-value">12 dias atrás (YouTube)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">ETA até Viral</div>
+                        <div class="meta-value">3-7 dias</div>
+                    </div>
+                </div>
+
+                <div style="margin: 15px 0;">
+                    <strong style="color: #667eea;">Confiança na Previsão:</strong>
+                    <div class="likelihood-bar">
+                        <div class="likelihood-fill" style="width: 92%;"></div>
+                    </div>
+                </div>
+
+                <div class="platform-grid">
+                    <div class="platform-badge active">
+                        <div>🔍 Google Trends</div>
+                        <div style="font-size: 0.85em; color: #aaa; margin-top: 5px;">↑ 380%</div>
+                    </div>
+                    <div class="platform-badge active">
+                        <div>▶️ YouTube</div>
+                        <div style="font-size: 0.85em; color: #aaa; margin-top: 5px;">4 canais small</div>
+                    </div>
+                    <div class="platform-badge active">
+                        <div>𝕏 Twitter</div>
+                        <div style="font-size: 0.85em; color: #aaa; margin-top: 5px;">↑ 650%</div>
+                    </div>
+                    <div class="platform-badge active">
+                        <div>🎵 TikTok</div>
+                        <div style="font-size: 0.85em; color: #aaa; margin-top: 5px;">250M views</div>
+                    </div>
+                    <div class="platform-badge active">
+                        <div>🔤 Autocomplete</div>
+                        <div style="font-size: 0.85em; color: #aaa; margin-top: 5px;">Novo termo</div>
+                    </div>
+                </div>
+
+                <div class="timeline-section">
+                    <strong style="color: #667eea;">📊 Timeline de Surgimento:</strong>
+
+                    <div class="timeline-item">
+                        <span class="timeline-date">7 dias atrás</span>
+                        <span class="timeline-event">▶️ YouTube: Canal pequeno (28K subs) publica "Game Dev with ChatGPT" → 3.2M views</span>
+                    </div>
+
+                    <div class="timeline-arrow">↓</div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-date">5 dias atrás</span>
+                        <span class="timeline-event">🔍 Google: "generative AI game development" começa a crescer → 250K buscas/dia</span>
+                    </div>
+
+                    <div class="timeline-arrow">↓</div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-date">3 dias atrás</span>
+                        <span class="timeline-event">𝕏 Twitter: "#AIGameDev" explode com 650% mais menções → 150K tweets/dia</span>
+                    </div>
+
+                    <div class="timeline-arrow">↓</div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-date">2 dias atrás</span>
+                        <span class="timeline-event">🎵 TikTok: Som "ai_dev_moment" viralizou → 45M views em 2 dias</span>
+                    </div>
+
+                    <div class="timeline-arrow">↓</div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-date">AGORA</span>
+                        <span class="timeline-event">▶️ YouTube: Canais médios (200K-500K subs) começam a falar</span>
+                    </div>
+
+                    <div class="timeline-arrow">↓</div>
+
+                    <div class="timeline-item" style="background: #ff6b6b; opacity: 0.3;">
+                        <span class="timeline-date">PRÓXIMO (3-7d)</span>
+                        <span class="timeline-event">▶️ YouTube: Canais GIGANTES (1M+ subs) descobrem → EXPLODE</span>
+                    </div>
+                </div>
+
+                <div class="action-box">
+                    <strong>🎯 AÇÃO CONCRETA:</strong>
+                    <ul class="action-list">
+                        <li>Crie tutorial: "Como fazer jogo com ChatGPT em 24h"</li>
+                        <li>Colabore com 4 criadores desses canais pequenos (28K, 15K, 22K, 18K subs)</li>
+                        <li>Aproveite AGORA: Você estará nos primeiros quando os gigantes descobrirem</li>
+                        <li>Prioridade: Este é o momento ideal para entrar (fase 2/5 do ciclo viral)</li>
+                    </ul>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">AI</span>
+                    <span class="tag">Game Development</span>
+                    <span class="tag">Generative</span>
+                    <span class="tag">Emergente</span>
+                    <span class="tag">Alta Probabilidade</span>
+                </div>
+            </div>
+
+            <!-- MEGA TREND 2 -->
+            <div class="mega-trend">
+                <div class="mega-trend-title">
+                    <span class="fire-icon">🔥</span>
+                    Physics-Based Game Mechanics with AI
+                </div>
+
+                <div class="trend-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Força (Plataformas)</div>
+                        <div class="meta-value">⭐⭐⭐⭐ (4/5)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Likelihood Viral</div>
+                        <div class="meta-value">85%</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Primeira Aparição</div>
+                        <div class="meta-value">14 dias atrás (YouTube)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">ETA até Viral</div>
+                        <div class="meta-value">5-10 dias</div>
+                    </div>
+                </div>
+
+                <div style="margin: 15px 0;">
+                    <strong style="color: #667eea;">Confiança na Previsão:</strong>
+                    <div class="likelihood-bar">
+                        <div class="likelihood-fill" style="width: 85%;"></div>
+                    </div>
+                </div>
+
+                <div class="platform-grid">
+                    <div class="platform-badge active">
+                        <div>🔍 Google</div>
+                        <div style="font-size: 0.85em; color: #aaa; margin-top: 5px;">↑ 250%</div>
+                    </div>
+                    <div class="platform-badge active">
+                        <div>▶️ YouTube</div>
+                        <div style="font-size: 0.85em; color: #aaa; margin-top: 5px;">3 canais small</div>
+                    </div>
+                    <div class="platform-badge active">
+                        <div>𝕏 Twitter</div>
+                        <div style="font-size: 0.85em; color: #aaa; margin-top: 5px;">↑ 420%</div>
+                    </div>
+                    <div class="platform-badge">
+                        <div>🎵 TikTok</div>
+                        <div style="font-size: 0.85em; color: #aaa; margin-top: 5px;">Ainda pequeno</div>
+                    </div>
+                    <div class="platform-badge active">
+                        <div>🔤 Autocomplete</div>
+                        <div style="font-size: 0.85em; color: #aaa; margin-top: 5px;">Novo termo</div>
+                    </div>
+                </div>
+
+                <div class="action-box">
+                    <strong>🎯 AÇÃO:</strong>
+                    <ul class="action-list">
+                        <li>Tutorial: "Physics Engine + AI = Mind-Blowing Games"</li>
+                        <li>Ainda há tempo de entrar antes do pico (fase 3/5)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- GOOGLE TRENDS SECTION -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🔍</span>
+                Google Trends - Crescimento ANÔMALO (não normal)
+            </div>
+
+            <div class="trend-item">
+                <div class="trend-title">
+                    VR Haptics Gaming
+                    <span class="growth-badge">↑ 320% (NOVO TERMO!)</span>
+                </div>
+                <p style="color: #aaa; margin-top: 8px;">Este termo não existia há 30 dias. Apareceu de repente. Significa que descoberta algo novo.</p>
+                <div class="trend-meta" style="margin-top: 12px;">
+                    <div class="meta-item">
+                        <div class="meta-label">Volume</div>
+                        <div class="meta-value">45K buscas/dia</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Crescimento</div>
+                        <div class="meta-value">↑ 320% (7 dias)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Momentum</div>
+                        <div class="meta-value">Acelerou 40% vs semana anterior</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trend-item">
+                <div class="trend-title">
+                    Cloud Gaming Latency Fix
+                    <span class="growth-badge">↑ 280% (NOVO!)</span>
+                </div>
+                <p style="color: #aaa; margin-top: 8px;">Problema específico que está crescendo. Pode indicar nova solução ou nova tecnologia.</p>
+                <div class="trend-meta" style="margin-top: 12px;">
+                    <div class="meta-item">
+                        <div class="meta-label">Volume</div>
+                        <div class="meta-value">32K buscas/dia</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Crescimento</div>
+                        <div class="meta-value">↑ 280% (7 dias)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- YOUTUBE IGUANA SECTION -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">▶️</span>
+                YouTube - Método Iguana (Canais Pequenos com Performance Anômala)
+            </div>
+
+            <div class="trend-item">
+                <div class="trend-title">
+                    "We Made a Game Using ONLY AI (No Coding)"
+                    <span class="anomaly-score critical">⚠️⚠️⚠️ MUITO ANÔMALO</span>
+                </div>
+                <div class="trend-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Canal</div>
+                        <div class="meta-value">IndieDevsLab (28K subs)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Views</div>
+                        <div class="meta-value">3.2M em 5 dias</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">VPH (Views/Hora)</div>
+                        <div class="meta-value">18,000 VPH</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Vs Média do Canal</div>
+                        <div class="meta-value"><strong style="color: #ff6b6b;">15x acima!</strong></div>
+                    </div>
+                </div>
+                <p style="color: #aaa; margin-top: 12px; font-style: italic;">
+                    ⚡ Este vídeo tem performance ANÔMALA. O canal normalmente faz 200 views/hora.
+                    Neste vídeo: 18,000 VPH. O tema "AI Game Dev" está germinando.
+                </p>
+            </div>
+
+            <div class="trend-item">
+                <div class="trend-title">
+                    "Indie Game Using ChatGPT (Results Shocked Everyone)"
+                    <span class="anomaly-score high">⚠️⚠️ MUITO ANÔMALO</span>
+                </div>
+                <div class="trend-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Canal</div>
+                        <div class="meta-value">GameDevTiny (15K subs)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Views</div>
+                        <div class="meta-value">2.8M em 6 dias</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">VPH</div>
+                        <div class="meta-value">14,500 VPH</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Vs Média do Canal</div>
+                        <div class="meta-value"><strong style="color: #ff6b6b;">12x acima!</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TWITTER SECTION -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">𝕏</span>
+                Twitter - Termos Específicos que Explodiram (não hashtags genéricas)
+            </div>
+
+            <div class="trend-item">
+                <div class="trend-title">
+                    "generative AI game development"
+                    <span class="growth-badge">↑ 650% (Específico!)</span>
+                </div>
+                <div class="trend-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Menções</div>
+                        <div class="meta-value">150K tweets/dia (crescendo)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Crescimento</div>
+                        <div class="meta-value">650% em 7 dias</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Sentiment</div>
+                        <div class="meta-value">82% Positivo</div>
+                    </div>
+                </div>
+                <p style="color: #aaa; margin-top: 8px;">Termo específico = tendência real. Não é "gaming trends" genérico.</p>
+            </div>
+
+            <div class="trend-item">
+                <div class="trend-title">
+                    "neural rendering in games"
+                    <span class="growth-badge">↑ 580%</span>
+                </div>
+                <div class="trend-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Menções</div>
+                        <div class="meta-value">95K tweets/dia</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Crescimento</div>
+                        <div class="meta-value">580% em 7 dias</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TIKTOK SECTION -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎵</span>
+                TikTok - Sounds/Hashtags Novos (menos de 1 mês)
+            </div>
+
+            <div class="trend-item">
+                <div class="trend-title">
+                    Sound: "ai_dev_moment" (criado há 14 dias)
+                    <span class="growth-badge">↑ 180K views/dia</span>
+                </div>
+                <div class="trend-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Views Totais</div>
+                        <div class="meta-value">2.5B views</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Velocity</div>
+                        <div class="meta-value">180K views/dia</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Age</div>
+                        <div class="meta-value">14 dias (NOVO!)</div>
+                    </div>
+                </div>
+                <p style="color: #aaa; margin-top: 8px;">Sound NOVO que explodiu. Criadores estão usando para falar de AI em games.</p>
+            </div>
+        </div>
+
+        <!-- GOOGLE AUTOCOMPLETE SECTION -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🔤</span>
+                Google Autocomplete - Termos Que Não Existiam 30 Dias Atrás
+            </div>
+
+            <div class="trend-item">
+                <div class="trend-title">
+                    Novos Termos no Autocomplete
+                    <span class="growth-badge">🆕 NOVOS!</span>
+                </div>
+                <div style="margin-top: 12px;">
+                    <div style="padding: 10px; background: rgba(102, 126, 234, 0.1); border-radius: 6px; margin: 8px 0;">
+                        <strong>"gaming with AI assist"</strong> - 8.5K buscas/semana (novo há 3 semanas)
+                    </div>
+                    <div style="padding: 10px; background: rgba(102, 126, 234, 0.1); border-radius: 6px; margin: 8px 0;">
+                        <strong>"game physics engine AI"</strong> - 12K buscas/semana (novo há 2 semanas)
+                    </div>
+                    <div style="padding: 10px; background: rgba(102, 126, 234, 0.1); border-radius: 6px; margin: 8px 0;">
+                        <strong>"neural network game design"</strong> - 5.5K buscas/semana (novo há 10 dias)
+                    </div>
+                </div>
+                <p style="color: #aaa; margin-top: 12px;">Google só sugere termos que MUITAS pessoas buscam. Se apareceu no autocomplete = é tendência real.</p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

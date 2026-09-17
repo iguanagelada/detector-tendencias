@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVP: App Unificado de Trends</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .card-title {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            font-size: 1.5em;
+        }
+
+        .method-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .method-list li {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #333;
+        }
+
+        .method-list li strong {
+            color: #667eea;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-box {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e0e7ff;
+            text-align: center;
+        }
+
+        .feature-box strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .feature-box p {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .status.ready {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.easy {
+            background: #cfe2ff;
+            color: #084298;
+        }
+
+        .status.moderate {
+            background: #fff3cd;
+            color: #664d03;
+        }
+
+        .flow-chart {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .flow-step {
+            padding: 12px;
+            margin: 10px 0;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #764ba2;
+        }
+
+        .arrow {
+            text-align: center;
+            color: #667eea;
+            font-size: 1.5em;
+            margin: 5px 0;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 App Unificado de Trends</h1>
+            <p class="subtitle">Busque tendências de múltiplas fontes em um único lugar</p>
+        </header>
+
+        <div class="dashboard">
+            <div class="card">
+                <div class="card-title">
+                    <span class="icon">🎯</span>
+                    Seu Objetivo
+                </div>
+                <p style="color: #666; line-height: 1.6;">
+                    Eliminar o trabalho manual de buscar tendências em 10+ plataformas diferentes. Um único dashboard que te mostra tudo o que está viralizando em tempo real.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <span class="icon">⚡</span>
+                    Resultado Final
+                </div>
+                <p style="color: #666; line-height: 1.6;">
+                    Economizar <strong>horas por semana</strong> de pesquisa manual. Descobrir trends antes da concorrência. Tomar decisões baseadas em dados reais.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🔍 As 10+ Maneiras de Buscar Trends</h2>
+
+            <h3 style="color: #333; margin: 25px 0 15px 0;">Já Integradas (Prontas para Usar):</h3>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <strong>Google Trends</strong>
+                    <p>Brasil + EUA<br>Por categoria</p>
+                    <span class="status ready">✅ Pronto</span>
+                </div>
+                <div class="feature-box">
+                    <strong>YouTube Trends</strong>
+                    <p>VidIQ<br>Vídeos outliers</p>
+                    <span class="status ready">✅ Pronto</span>
+                </div>
+                <div class="feature-box">
+                    <strong>Keyword Tool</strong>
+                    <p>Volume de busca<br>Tendências</p>
+                    <span class="status ready">✅ Pronto</span>
+                </div>
+            </div>
+
+            <h3 style="color: #333; margin: 25px 0 15px 0;">Fáceis de Integrar:</h3>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <strong>X/Twitter</strong>
+                    <p>Trending topics<br>Posts virais</p>
+                    <span class="status easy">🟢 Fácil</span>
+                </div>
+                <div class="feature-box">
+                    <strong>Reddit</strong>
+                    <p>Comunidades<br>Engajamento</p>
+                    <span class="status easy">🟢 Fácil</span>
+                </div>
+                <div class="feature-box">
+                    <strong>Google Autocomplete</strong>
+                    <p>Buscas crescentes<br>Sugestões em tempo real</p>
+                    <span class="status easy">🟢 Fácil</span>
+                </div>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <strong>YouTube Autocomplete</strong>
+                    <p>O que as pessoas<br>procuram</p>
+                    <span class="status easy">🟢 Fácil</span>
+                </div>
+                <div class="feature-box">
+                    <strong>TikTok Trends</strong>
+                    <p>Últimas 24h<br>Últimas semana</p>
+                    <span class="status moderate">🟡 Moderado</span>
+                </div>
+                <div class="feature-box">
+                    <strong>TikTok Creative Center</strong>
+                    <p>Hashtags + Músicas<br>Últimos 7/14/30 dias</p>
+                    <span class="status moderate">🟡 Moderado</span>
+                </div>
+            </div>
+
+            <h3 style="color: #333; margin: 25px 0 15px 0;">Métodos Especiais:</h3>
+            <ul class="method-list">
+                <li><strong>Método Iguana:</strong> Vídeos pequenos que explodiram apesar de qualidade ruim → Identifica nichos emergentes</li>
+                <li><strong>Páginas de Memes:</strong> Monitora grandes contas de memes → Vê o que está viralizando culturalmente</li>
+                <li><strong>YouTube Studio Research:</strong> Dados da sua própria audiência → O que eles estão buscando agora</li>
+                <li><strong>Contas Específicas:</strong> Segue influencers do nicho → Vê antes de viralizar globalmente</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🎨 Como Seu App Ficaria</h2>
+
+            <h3 style="color: #333; margin: 20px 0 15px 0;">Fluxo de Uso:</h3>
+            <div class="flow-chart">
+                <div class="flow-step">
+                    <strong>1. Escolher Nicho</strong>
+                    <p>Exemplo: "AI para educação" ou "Fitness" ou "Games"</p>
+                </div>
+                <div class="arrow">↓</div>
+                <div class="flow-step">
+                    <strong>2. Escolher País</strong>
+                    <p>Brasil, EUA, ou ambos</p>
+                </div>
+                <div class="arrow">↓</div>
+                <div class="flow-step">
+                    <strong>3. Ver Todos os Trends</strong>
+                    <p>Num só lugar: Google + YouTube + Twitter + TikTok + Reddit + tudo</p>
+                </div>
+                <div class="arrow">↓</div>
+                <div class="flow-step">
+                    <strong>4. Filtrar e Organizar</strong>
+                    <p>Por crescimento, por plataforma, por data, por engajamento</p>
+                </div>
+                <div class="arrow">↓</div>
+                <div class="flow-step">
+                    <strong>5. Receber Alertas</strong>
+                    <p>Quando um trend novo aparece, você é notificado</p>
+                </div>
+            </div>
+
+            <h3 style="color: #333; margin: 25px 0 15px 0;">O Dashboard Mostraria:</h3>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <strong>🔥 Trends Quentes</strong>
+                    <p>Top 10 agora<br>Crescimento %</p>
+                </div>
+                <div class="feature-box">
+                    <strong>📈 Histórico</strong>
+                    <p>Como cresceu nos últimos dias<br>Gráficos</p>
+                </div>
+                <div class="feature-box">
+                    <strong>🌐 Por Plataforma</strong>
+                    <p>YouTube vs TikTok<br>vs Twitter vs Google</p>
+                </div>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <strong>🎯 Intersecções</strong>
+                    <p>Trends que crescem<br>em múltiplas plataformas</p>
+                </div>
+                <div class="feature-box">
+                    <strong>🔔 Alertas</strong>
+                    <p>Notificações de trends<br>que você acompanha</p>
+                </div>
+                <div class="feature-box">
+                    <strong>💾 Favoritos</strong>
+                    <p>Salvar trends<br>para análise depois</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">📝 Próximos Passos (Sem Código)</h2>
+
+            <div style="background: #f8f9ff; padding: 20px; border-radius: 8px; border-left: 4px solid #667eea;">
+                <h3 style="color: #667eea; margin-bottom: 15px;">O que você precisa fazer:</h3>
+                <ol style="color: #333; line-height: 2; margin-left: 20px;">
+                    <li><strong>Confirmar:</strong> Quer começar pelo MVP (versão simples) ou direto no completo?</li>
+                    <li><strong>Listar:</strong> Quais são seus 3 nichos principais que quer monitorar?</li>
+                    <li><strong>Definir:</strong> Precisa de alertas em tempo real ou relatório diário é suficiente?</li>
+                    <li><strong>Escolher:</strong> Qual plataforma é a prioridade? (YouTube > TikTok > Google Trends > etc)</li>
+                </ol>
+            </div>
+
+            <h3 style="color: #333; margin: 25px 0 15px 0;">Timeline Estimada:</h3>
+            <ul style="color: #333; line-height: 1.8; margin-left: 20px;">
+                <li><strong>MVP Básico:</strong> 2-3 semanas (Google Trends + YouTube + Autocomplete)</li>
+                <li><strong>MVP Completo:</strong> 1 mês (adiciona Twitter, Reddit, TikTok)</li>
+                <li><strong>Versão Profissional:</strong> 1.5-2 meses (alertas, histórico, análises avançadas)</li>
+            </ul>
+        </div>
+
+        <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center;">
+            <h2 class="section-title" style="color: white; border-bottom-color: white;">✨ Bom Saber</h2>
+            <p style="font-size: 1.1em; line-height: 1.8;">
+                Você <strong>não precisa entender de programação</strong> para isso funcionar.<br>
+                Contratarei um desenvolvedor ou usarei ferramentas no-code se necessário.<br>
+                <br>
+                <strong>O importante é que você saiba exatamente o que quer.</strong><br>
+                E parece que você já sabe muito bem! 🎯
+            </p>
+        </div>
+    </div>
+</body>
+</html>

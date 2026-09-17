@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Trends Gaming - Versão Otimizada V2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0e27;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 1.05em;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* MEGA TRENDS GRID (2 COLUNAS) */
+        .mega-trends-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .mega-trend-card {
+            background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
+            border: 2px solid #2a2f4a;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 5px solid #ff6b6b;
+            animation: slideUpIn 0.5s ease;
+        }
+
+        @keyframes slideUpIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mega-trend-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .mega-trend-card-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fire-icon {
+            font-size: 1.8em;
+            animation: flicker 2s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .mega-trend-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .stat-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #2a2f4a;
+            font-size: 0.95em;
+        }
+
+        .stat-label {
+            color: #aaa;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .likelihood-bar {
+            background: #2a2f4a;
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .likelihood-fill {
+            background: linear-gradient(90deg, #ff6b6b 0%, #ffa500 100%);
+            height: 100%;
+            animation: slideIn 1s ease;
+        }
+
+        @keyframes slideIn {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .btn-view-details {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-view-details:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* EXPANDED VIEW */
+        .mega-trend-expanded {
+            background: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
+            border-radius: 12px;
+            margin-bottom: 40px;
+            border: 1px solid #2a2f4a;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            animation: slideDownIn 0.4s ease;
+        }
+
+        @keyframes slideDownIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .expanded-header {
+            background: linear-gradient(90deg, #ff6b6b 0%, #ffa500 100%);
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .expanded-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-close {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-close:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
+        .section {
+            border-bottom: 1px solid #2a2f4a;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-header {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 18px 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.15em;
+            font-weight: 700;
+            color: #667eea;
+            border-left: 4px solid #667eea;
+        }
+
+        .section-icon {
+            font-size: 1.3em;
+        }
+
+        .section-content {
+            padding: 20px 25px;
+        }
+
+        .trend-item {
+            padding: 15px;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 3px solid #667eea;
+        }
+
+        .trend-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .trend-item-title {
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .growth-badge {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .trend-item-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+
+        .meta-field {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .meta-label {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            color: #999;
+        }
+
+        .meta-value {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1em;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #667eea, transparent);
+            margin: 30px 0;
+        }
+
+        .generation-label {
+            text-align: center;
+            color: #667eea;
+            font-weight: 600;
+            margin: 25px 0;
+            padding: 15px;
+            font-size: 1.1em;
+        }
+
+        .load-more-section {
+            padding: 30px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn-load-more {
+            padding: 14px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-load-more:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .mega-trends-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .expanded-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header id="header">
+            <h1><span>🎮</span> Trends Gaming - Dashboard</h1>
+            <p class="subtitle">Visualize múltiplas MEGA TRENDS. Clique em "Ver Detalhes" para explorar cada uma</p>
+
+            <div class="controls">
+                <button class="btn btn-primary" onclick="resetAndSearch()">
+                    <span>🔍</span> Nova Busca
+                </button>
+                <button class="btn btn-secondary" onclick="clearHistory()">
+                    <span>🗑️</span> Limpar
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <div id="content">
+        </div>
+
+        <!-- LOAD MORE SECTION -->
+        <div class="load-more-section">
+            <button class="btn-load-more" onclick="generateMore()">
+                <span>➕</span> Gerar Mais Tendências
+            </button>
+            <p style="margin-top: 15px; color: #aaa; font-size: 0.9em;">
+                Busca novas tendências e adiciona acima. Compare rapidamente e clique em "Ver Detalhes" para mergulhar em uma.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let generationCount = 1;
+        let expandedTrend = null;
+        let usedIndices = [];
+
+        const trendsDatabase = [
+            {
+                mega: "Game Development with Generative AI",
+                likelihood: 92,
+                growth: 380,
+                platforms: 5,
+                googleTrends: [
+                    { name: "generative AI game development", growth: 380, volume: "125K" },
+                    { name: "ChatGPT game design", growth: 320, volume: "98K" }
+                ],
+                youtubeIguana: [
+                    { title: "We Made a Game Using ONLY AI (No Code)", channel: "IndieDevsLab", subs: "28K", views: "3.2M", vph: "18K", anomaly: 15 },
+                    { title: "Game Development with ChatGPT - Full Tutorial", channel: "GameDevTiny", subs: "15K", views: "2.8M", vph: "14.5K", anomaly: 12 }
+                ],
+                twitter: [
+                    { term: "generative AI game development", growth: 650, mentions: "150K/dia" },
+                    { term: "ChatGPT game design tutorial", growth: 520, mentions: "95K/dia" }
+                ],
+                tiktok: [
+                    { sound: "ai_dev_moment", age: "14 dias", views: "2.5B", velocity: "180K/dia" },
+                    { sound: "gamedev_ai_magic", age: "10 dias", views: "1.8B", velocity: "150K/dia" }
+                ],
+                googleAutocomplete: [
+                    "gaming with AI assist (8.5K/semana)",
+                    "game development generative AI (12K/semana)",
+                    "ChatGPT for game design (6.5K/semana)"
+                ],
+                youtubeAutocomplete: [
+                    "game development with AI",
+                    "generative AI game design",
+                    "ChatGPT gaming tutorial"
+                ],
+                reddit: [
+                    { sub: "r/gamedev", post: "Anyone using ChatGPT for game mechanics?", upvotes: "8.2K", comments: "2.3K" },
+                    { sub: "r/gaming", post: "AI generated games are getting scary good", upvotes: "15K", comments: "4.5K" }
+                ],
+                memes: [
+                    { account: "@GamememesDaily", likes: "125K", comments: "25K", engagement: "↑ 320%" },
+                    { account: "@IndieGamesHumor", likes: "89K", comments: "18K", engagement: "↑ 280%" }
+                ]
+            },
+            {
+                mega: "Physics-Based Game Mechanics with AI",
+                likelihood: 85,
+                growth: 250,
+                platforms: 4,
+                googleTrends: [
+                    { name: "AI physics engine games", growth: 250, volume: "85K" },
+                    { name: "realistic physics game AI", growth: 210, volume: "62K" }
+                ],
+                youtubeIguana: [
+                    { title: "AI Physics Broke Our Game (In A Good Way)", channel: "PixelStudio", subs: "32K", views: "2.1M", vph: "16K", anomaly: 14 },
+                    { title: "Physics Engine + AI = Mind-Blowing Games", channel: "GameLab", subs: "18K", views: "1.9M", vph: "13K", anomaly: 11 }
+                ],
+                twitter: [
+                    { term: "AI physics engine", growth: 420, mentions: "120K/dia" },
+                    { term: "physics-based game AI", growth: 380, mentions: "85K/dia" }
+                ],
+                tiktok: [
+                    { sound: "epic_physics_ai", age: "16 dias", views: "2.1B", velocity: "170K/dia" },
+                    { sound: "physics_magic", age: "12 dias", views: "1.5B", velocity: "140K/dia" }
+                ],
+                googleAutocomplete: [
+                    "physics engine AI game (9.2K/semana)",
+                    "realistic physics in games AI (7.8K/semana)",
+                    "game physics simulation AI (5.5K/semana)"
+                ],
+                youtubeAutocomplete: [
+                    "physics engine for game development",
+                    "AI physics simulation tutorial",
+                    "realistic physics with AI"
+                ],
+                reddit: [
+                    { sub: "r/gamedev", post: "Physics + AI = Next level game mechanics", upvotes: "6.8K", comments: "1.9K" },
+                    { sub: "r/gameengineering", post: "AI-driven physics systems changing everything", upvotes: "9.1K", comments: "2.7K" }
+                ],
+                memes: [
+                    { account: "@Physics_Memes", likes: "156K", comments: "32K", engagement: "↑ 380%" },
+                    { account: "@GameDevJokes", likes: "102K", comments: "21K", engagement: "↑ 310%" }
+                ]
+            },
+            {
+                mega: "VR Haptics and Immersive Gaming",
+                likelihood: 80,
+                growth: 320,
+                platforms: 5,
+                googleTrends: [
+                    { name: "VR haptics gaming", growth: 320, volume: "45K" },
+                    { name: "haptic feedback VR games", growth: 280, volume: "38K" }
+                ],
+                youtubeIguana: [
+                    { title: "VR Haptics Just Changed EVERYTHING (Demo)", channel: "VRLab", subs: "25K", views: "1.8M", vph: "12K", anomaly: 10 },
+                    { title: "Realistic Haptic Feedback in VR Games", channel: "TechGaming", subs: "21K", views: "1.5M", vph: "10.5K", anomaly: 9 }
+                ],
+                twitter: [
+                    { term: "VR haptic feedback gaming", growth: 480, mentions: "135K/dia" },
+                    { term: "haptic VR immersion", growth: 420, mentions: "95K/dia" }
+                ],
+                tiktok: [
+                    { sound: "vr_haptic_wow", age: "18 dias", views: "1.9B", velocity: "160K/dia" },
+                    { sound: "haptic_gaming_vibes", age: "13 dias", views: "1.3B", velocity: "130K/dia" }
+                ],
+                googleAutocomplete: [
+                    "VR haptics gaming 2026 (7.3K/semana)",
+                    "best haptic feedback VR (9.1K/semana)",
+                    "VR haptic suit gaming (4.8K/semana)"
+                ],
+                youtubeAutocomplete: [
+                    "VR haptic feedback gaming",
+                    "best haptic VR games",
+                    "haptic technology gaming"
+                ],
+                reddit: [
+                    { sub: "r/virtualreality", post: "Haptic feedback is the future of VR gaming", upvotes: "7.4K", comments: "2.1K" },
+                    { sub: "r/gaming", post: "VR haptics just got insanely realistic", upvotes: "12K", comments: "3.8K" }
+                ],
+                memes: [
+                    { account: "@VRMemes", likes: "178K", comments: "38K", engagement: "↑ 420%" },
+                    { account: "@TechHumor", likes: "95K", comments: "19K", engagement: "↑ 290%" }
+                ]
+            },
+            {
+                mega: "Cloud Gaming Infrastructure",
+                likelihood: 78,
+                growth: 290,
+                platforms: 4,
+                googleTrends: [
+                    { name: "cloud gaming latency fix", growth: 290, volume: "68K" },
+                    { name: "Xbox cloud gaming streaming", growth: 245, volume: "55K" }
+                ],
+                youtubeIguana: [
+                    { title: "Cloud Gaming Just Beat Local Gaming (Seriously)", channel: "GameStream", subs: "19K", views: "1.4M", vph: "9.8K", anomaly: 8 },
+                    { title: "Ultra Low Latency Cloud Gaming Solution", channel: "TechLab", subs: "23K", views: "1.6M", vph: "11K", anomaly: 9 }
+                ],
+                twitter: [
+                    { term: "cloud gaming latency", growth: 520, mentions: "98K/dia" },
+                    { term: "streaming game performance", growth: 410, mentions: "72K/dia" }
+                ],
+                tiktok: [
+                    { sound: "cloud_gaming_lag", age: "15 dias", views: "1.7B", velocity: "155K/dia" },
+                    { sound: "instant_gaming", age: "11 dias", views: "1.2B", velocity: "120K/dia" }
+                ],
+                googleAutocomplete: [
+                    "best cloud gaming service 2026 (6.8K/semana)",
+                    "cloud gaming latency problems (8.3K/semana)",
+                    "PlayStation plus cloud gaming (5.2K/semana)"
+                ],
+                youtubeAutocomplete: [
+                    "cloud gaming comparison",
+                    "best cloud gaming service",
+                    "cloud gaming latency issue"
+                ],
+                reddit: [
+                    { sub: "r/cloudgaming", post: "Cloud gaming finally became actually good", upvotes: "5.9K", comments: "1.8K" },
+                    { sub: "r/gaming", post: "Is cloud gaming the future?", upvotes: "10.2K", comments: "3.2K" }
+                ],
+                memes: [
+                    { account: "@CloudMemes", likes: "134K", comments: "28K", engagement: "↑ 350%" },
+                    { account: "@GameNerd", likes: "76K", comments: "16K", engagement: "↑ 240%" }
+                ]
+            },
+            {
+                mega: "Neural Networks in Game Design",
+                likelihood: 75,
+                growth: 265,
+                platforms: 4,
+                googleTrends: [
+                    { name: "neural network game design", growth: 265, volume: "52K" },
+                    { name: "machine learning game mechanics", growth: 198, volume: "41K" }
+                ],
+                youtubeIguana: [
+                    { title: "Neural Networks Made Our Game INSANELY Difficult", channel: "GameAI", subs: "17K", views: "1.2M", vph: "8.5K", anomaly: 7 },
+                    { title: "Using ML to Generate Game Levels", channel: "DevStudio", subs: "20K", views: "1.3M", vph: "9.2K", anomaly: 8 }
+                ],
+                twitter: [
+                    { term: "neural networks game AI", growth: 445, mentions: "82K/dia" },
+                    { term: "machine learning game mechanics", growth: 380, mentions: "65K/dia" }
+                ],
+                tiktok: [
+                    { sound: "ai_impossible_game", age: "13 dias", views: "1.5B", velocity: "145K/dia" },
+                    { sound: "neural_net_boss", age: "9 dias", views: "980M", velocity: "110K/dia" }
+                ],
+                googleAutocomplete: [
+                    "neural network game development (5.5K/semana)",
+                    "machine learning game balance (6.9K/semana)",
+                    "AI game opponent training (4.1K/semana)"
+                ],
+                youtubeAutocomplete: [
+                    "neural network game design",
+                    "machine learning game development",
+                    "AI game mechanics tutorial"
+                ],
+                reddit: [
+                    { sub: "r/gamedev", post: "Neural Networks for difficulty scaling", upvotes: "4.7K", comments: "1.5K" },
+                    { sub: "r/MachineLearning", post: "ML in game design is next frontier", upvotes: "8.1K", comments: "2.9K" }
+                ],
+                memes: [
+                    { account: "@AIGamer", likes: "98K", comments: "21K", engagement: "↑ 295%" },
+                    { account: "@GameDev_Fun", likes: "67K", comments: "14K", engagement: "↑ 210%" }
+                ]
+            },
+            {
+                mega: "Real-Time Ray Tracing Optimization",
+                likelihood: 72,
+                growth: 240,
+                platforms: 4,
+                googleTrends: [
+                    { name: "real-time ray tracing performance", growth: 240, volume: "48K" },
+                    { name: "DLSS ray tracing games", growth: 185, volume: "36K" }
+                ],
+                youtubeIguana: [
+                    { title: "Ray Tracing with ZERO Performance Loss", channel: "GraphicsLab", subs: "16K", views: "1.1M", vph: "7.8K", anomaly: 6 },
+                    { title: "Next-Gen Ray Tracing Explained Simply", channel: "TechExplain", subs: "19K", views: "1.25M", vph: "8.9K", anomaly: 7 }
+                ],
+                twitter: [
+                    { term: "ray tracing optimization", growth: 395, mentions: "71K/dia" },
+                    { term: "DLSS 3.5 gaming", growth: 340, mentions: "55K/dia" }
+                ],
+                tiktok: [
+                    { sound: "graphics_comparison", age: "12 dias", views: "1.3B", velocity: "135K/dia" },
+                    { sound: "ray_traced_beauty", age: "8 dias", views: "870M", velocity: "95K/dia" }
+                ],
+                googleAutocomplete: [
+                    "ray tracing vs DLSS (5.1K/semana)",
+                    "best games with ray tracing 2026 (7.4K/semana)",
+                    "ray tracing performance comparison (4.8K/semana)"
+                ],
+                youtubeAutocomplete: [
+                    "ray tracing settings optimization",
+                    "DLSS ray tracing comparison",
+                    "ray tracing performance guide"
+                ],
+                reddit: [
+                    { sub: "r/nvidia", post: "DLSS 3.5 ray tracing is wild", upvotes: "3.9K", comments: "1.2K" },
+                    { sub: "r/gaming", post: "Best ray tracing games right now", upvotes: "7.3K", comments: "2.4K" }
+                ],
+                memes: [
+                    { account: "@GraphicsMeme", likes: "84K", comments: "18K", engagement: "↑ 260%" },
+                    { account: "@GPUHumor", likes: "56K", comments: "12K", engagement: "↑ 190%" }
+                ]
+            }
+        ];
+
+        function resetAndSearch() {
+            const content = document.getElementById('content');
+            content.innerHTML = '';
+            generationCount = 1;
+            expandedTrend = null;
+            usedIndices = [];
+            renderFirstGeneration();
+        }
+
+        function generateMore() {
+            generationCount++;
+            const content = document.getElementById('content');
+
+            const loadingBtn = event.target;
+            loadingBtn.disabled = true;
+            loadingBtn.innerHTML = '<span class="loading"></span> Buscando...';
+
+            setTimeout(() => {
+                const newContent = generateTrendsHTML(generationCount);
+                const divider = `<div class="divider"></div><div class="generation-label">🔍 Busca #${generationCount}</div>`;
+                content.innerHTML = divider + newContent + content.innerHTML;
+
+                loadingBtn.disabled = false;
+                loadingBtn.innerHTML = '<span>➕</span> Gerar Mais Tendências';
+
+                document.querySelector('.generation-label').scrollIntoView({ behavior: 'smooth' });
+            }, 2000);
+        }
+
+        function clearHistory() {
+            if (confirm('Tem certeza? Isso vai limpar tudo.')) {
+                resetAndSearch();
+            }
+        }
+
+        function renderFirstGeneration() {
+            const content = document.getElementById('content');
+            content.innerHTML = `<div class="generation-label">🔍 Busca #1</div>` + generateTrendsHTML(1);
+        }
+
+        function getNewTrendIndices(gen) {
+            // Pega 2 tendências novas que não foram usadas ainda
+            let available = [];
+            for (let i = 0; i < trendsDatabase.length; i++) {
+                if (!usedIndices.includes(i)) {
+                    available.push(i);
+                }
+            }
+
+            // Se não tem mais disponíveis, reseta
+            if (available.length < 2) {
+                usedIndices = [];
+                available = [];
+                for (let i = 0; i < trendsDatabase.length; i++) {
+                    available.push(i);
+                }
+            }
+
+            // Pega 2 aleatorios
+            const indices = [];
+            for (let i = 0; i < 2; i++) {
+                const randomIdx = Math.floor(Math.random() * available.length);
+                indices.push(available[randomIdx]);
+                usedIndices.push(available[randomIdx]);
+                available.splice(randomIdx, 1);
+            }
+
+            return indices;
+        }
+
+        function toggleExpand(trendName) {
+            if (expandedTrend === trendName) {
+                expandedTrend = null;
+            } else {
+                expandedTrend = trendName;
+            }
+
+            renderView();
+        }
+
+        function renderView() {
+            const content = document.getElementById('content');
+
+            if (expandedTrend) {
+                const trend = trendsDatabase.find(t => t.mega === expandedTrend);
+                content.innerHTML = `<div class="generation-label">🔍 Busca #1</div>` + generateExpandedHTML(trend);
+            } else {
+                content.innerHTML = `<div class="generation-label">🔍 Busca #1</div>` + generateTrendsHTML(1);
+            }
+        }
+
+        function generateTrendsHTML(gen) {
+            const indices = getNewTrendIndices(gen);
+            let html = `<div class="mega-trends-grid">`;
+
+            indices.forEach(idx => {
+                const trend = trendsDatabase[idx];
+                html += `
+                    <div class="mega-trend-card" onclick="toggleExpand('${trend.mega}')">
+                        <div class="mega-trend-card-title">
+                            <span class="fire-icon">🔥</span>
+                            ${trend.mega}
+                        </div>
+
+                        <div class="mega-trend-stats">
+                            <div class="stat-line">
+                                <span class="stat-label">Força</span>
+                                <span class="stat-value">${'⭐'.repeat(trend.platforms)}</span>
+                            </div>
+                            <div class="stat-line">
+                                <span class="stat-label">Likelihood</span>
+                                <span class="stat-value">${trend.likelihood}%</span>
+                            </div>
+                            <div class="stat-line">
+                                <span class="stat-label">Crescimento</span>
+                                <span class="stat-value">↑ ${trend.growth}%</span>
+                            </div>
+                        </div>
+
+                        <div class="likelihood-bar">
+                            <div class="likelihood-fill" style="width: ${trend.likelihood}%;"></div>
+                        </div>
+
+                        <button class="btn-view-details">
+                            VER DETALHES →
+                        </button>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            return html;
+        }
+
+        function generateExpandedHTML(trend) {
+            let html = `
+                <div class="mega-trend-expanded">
+                    <div class="expanded-header">
+                        <div class="expanded-title">
+                            <span class="fire-icon">🔥</span>
+                            ${trend.mega}
+                        </div>
+                        <button class="btn-close" onclick="expandedTrend = null; renderView();">
+                            ✕ Voltar
+                        </button>
+                    </div>
+            `;
+
+            // GOOGLE TRENDS
+            html += `
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-icon">🔍</span>
+                        Google Trends
+                    </div>
+                    <div class="section-content">
+            `;
+            trend.googleTrends.forEach(item => {
+                html += `
+                    <div class="trend-item">
+                        <div class="trend-item-title">
+                            ${item.name}
+                            <span class="growth-badge">↑ ${item.growth}%</span>
+                        </div>
+                        <div class="trend-item-meta">
+                            <div class="meta-field">
+                                <span class="meta-label">Volume</span>
+                                <span class="meta-value">${item.volume} buscas/dia</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div></div>`;
+
+            // YOUTUBE IGUANA
+            html += `
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-icon">▶️</span>
+                        YouTube - Método Iguana
+                    </div>
+                    <div class="section-content">
+            `;
+            trend.youtubeIguana.forEach(video => {
+                html += `
+                    <div class="trend-item">
+                        <div class="trend-item-title">
+                            "${video.title}"
+                            <span class="growth-badge">⚠️ ${video.anomaly}x</span>
+                        </div>
+                        <div class="trend-item-meta">
+                            <div class="meta-field">
+                                <span class="meta-label">Canal</span>
+                                <span class="meta-value">${video.channel}</span>
+                            </div>
+                            <div class="meta-field">
+                                <span class="meta-label">Views</span>
+                                <span class="meta-value">${video.views}</span>
+                            </div>
+                            <div class="meta-field">
+                                <span class="meta-label">VPH</span>
+                                <span class="meta-value">${video.vph}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div></div>`;
+
+            // TWITTER
+            html += `
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-icon">𝕏</span>
+                        Twitter
+                    </div>
+                    <div class="section-content">
+            `;
+            trend.twitter.forEach(item => {
+                html += `
+                    <div class="trend-item">
+                        <div class="trend-item-title">
+                            "${item.term}"
+                            <span class="growth-badge">↑ ${item.growth}%</span>
+                        </div>
+                        <div class="trend-item-meta">
+                            <div class="meta-field">
+                                <span class="meta-label">Menções</span>
+                                <span class="meta-value">${item.mentions}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div></div>`;
+
+            // TIKTOK
+            html += `
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-icon">🎵</span>
+                        TikTok
+                    </div>
+                    <div class="section-content">
+            `;
+            trend.tiktok.forEach(sound => {
+                html += `
+                    <div class="trend-item">
+                        <div class="trend-item-title">
+                            Sound: "${sound.sound}"
+                            <span class="growth-badge">↑ ${sound.velocity}</span>
+                        </div>
+                        <div class="trend-item-meta">
+                            <div class="meta-field">
+                                <span class="meta-label">Age</span>
+                                <span class="meta-value">${sound.age}</span>
+                            </div>
+                            <div class="meta-field">
+                                <span class="meta-label">Views</span>
+                                <span class="meta-value">${sound.views}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div></div>`;
+
+            // GOOGLE AUTOCOMPLETE
+            html += `
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-icon">🔤</span>
+                        Google Autocomplete
+                    </div>
+                    <div class="section-content">
+            `;
+            trend.googleAutocomplete.forEach(term => {
+                html += `<div class="trend-item"><strong>${term}</strong></div>`;
+            });
+            html += `</div></div>`;
+
+            // YOUTUBE AUTOCOMPLETE
+            html += `
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-icon">📹</span>
+                        YouTube Autocomplete
+                    </div>
+                    <div class="section-content">
+            `;
+            trend.youtubeAutocomplete.forEach(term => {
+                html += `<div class="trend-item"><strong>"${term}"</strong></div>`;
+            });
+            html += `</div></div>`;
+
+            // REDDIT
+            html += `
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-icon">🔴</span>
+                        Reddit
+                    </div>
+                    <div class="section-content">
+            `;
+            trend.reddit.forEach(post => {
+                html += `
+                    <div class="trend-item">
+                        <div class="trend-item-title" style="color: #667eea; font-size: 0.9em;">${post.sub}</div>
+                        <div class="trend-item-title" style="color: #fff; font-size: 1em; margin: 5px 0;">"${post.post}"</div>
+                        <div class="trend-item-meta">
+                            <div class="meta-field">
+                                <span class="meta-label">Upvotes</span>
+                                <span class="meta-value">${post.upvotes}</span>
+                            </div>
+                            <div class="meta-field">
+                                <span class="meta-label">Comentários</span>
+                                <span class="meta-value">${post.comments}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div></div>`;
+
+            // MEMES
+            html += `
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-icon">😂</span>
+                        Páginas de Memes
+                    </div>
+                    <div class="section-content">
+            `;
+            trend.memes.forEach(meme => {
+                html += `
+                    <div class="trend-item">
+                        <div class="trend-item-title">${meme.account}</div>
+                        <div class="trend-item-meta">
+                            <div class="meta-field">
+                                <span class="meta-label">Likes</span>
+                                <span class="meta-value">${meme.likes}</span>
+                            </div>
+                            <div class="meta-field">
+                                <span class="meta-label">Comentários</span>
+                                <span class="meta-value">${meme.comments}</span>
+                            </div>
+                            <div class="meta-field">
+                                <span class="meta-label">Crescimento</span>
+                                <span class="meta-value">${meme.engagement}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div></div></div>`;
+
+            return html;
+        }
+
+        // Iniciar
+        generateFirstGeneration();
+    </script>
+</body>
+</html>
