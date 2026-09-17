@@ -10,7 +10,11 @@
       "Bash(git init *)",
       "Bash(git config *)",
       "Bash(git add *)",
-      "Bash(git commit -m 'Initial commit: Trending detector Phase 1 with intelligent anomaly detection *)"
+      "Bash(git commit -m 'Initial commit: Trending detector Phase 1 with intelligent anomaly detection *)",
+      "Bash(gh repo *)",
+      "Bash(vercel --version)",
+      "Bash(git commit -m 'Add Vercel deployment configuration and instructions *)",
+      "Bash(git commit -m 'Update Claude Code settings *)"
     ]
   }
 }
