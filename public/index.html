@@ -11,11 +11,25 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --bg-dark: #0f0f1e;
+            --card-dark: #1a1a2e;
+            --text-light: #e0e0e0;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             min-height: 100vh;
             padding: 20px;
+            transition: background 0.3s;
+        }
+
+        body.dark-mode {
+            background: var(--bg-dark);
+            color: var(--text-light);
         }
 
         .container {
@@ -26,8 +40,28 @@
         header {
             text-align: center;
             color: white;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             animation: fadeIn 0.6s ease-in;
+            position: relative;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: white;
+            color: var(--primary);
         }
 
         h1 {
@@ -43,23 +77,33 @@
         .controls {
             display: flex;
             gap: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             justify-content: center;
             flex-wrap: wrap;
             animation: slideDown 0.6s ease-out;
         }
 
-        input[type="text"] {
+        select, input[type="text"] {
             padding: 12px 20px;
             border: none;
             border-radius: 8px;
             font-size: 1em;
-            width: 250px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: all 0.3s;
+            background: white;
+            color: #333;
         }
 
-        input[type="text"]:focus {
+        select {
+            min-width: 150px;
+            cursor: pointer;
+        }
+
+        input[type="text"] {
+            width: 250px;
+        }
+
+        input[type="text"]:focus, select:focus {
             outline: none;
             transform: translateY(-2px);
             box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
@@ -78,7 +122,7 @@
 
         .btn-search {
             background: white;
-            color: #667eea;
+            color: var(--primary);
         }
 
         .btn-search:hover {
@@ -94,12 +138,32 @@
 
         .btn-more:hover {
             background: white;
-            color: #667eea;
+            color: var(--primary);
         }
 
         .btn-more:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+        }
+
+        .btn-icon {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            padding: 10px 15px;
+            font-size: 0.9em;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-icon:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .top-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
         }
 
         .loading {
@@ -142,6 +206,11 @@
             cursor: pointer;
         }
 
+        body.dark-mode .card {
+            background: var(--card-dark);
+            color: var(--text-light);
+        }
+
         .card:hover {
             transform: translateY(-4px);
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
@@ -149,6 +218,9 @@
 
         .card-header {
             margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
         }
 
         .card-title {
@@ -156,6 +228,11 @@
             font-weight: 700;
             color: #333;
             margin-bottom: 8px;
+            flex: 1;
+        }
+
+        body.dark-mode .card-title {
+            color: white;
         }
 
         .card-meta {
@@ -163,6 +240,11 @@
             gap: 15px;
             font-size: 0.9em;
             color: #666;
+            margin-bottom: 10px;
+        }
+
+        body.dark-mode .card-meta {
+            color: #aaa;
         }
 
         .badge {
@@ -174,7 +256,7 @@
         }
 
         .badge-likelihood {
-            background: #667eea;
+            background: var(--primary);
             color: white;
         }
 
@@ -183,16 +265,62 @@
             color: #333;
         }
 
+        body.dark-mode .badge-platforms {
+            background: #333;
+            color: #aaa;
+        }
+
+        .star-btn {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 10px;
+            transition: all 0.2s;
+        }
+
+        .star-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .star-btn.favorited {
+            color: #ffc107;
+        }
+
+        .growth-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        body.dark-mode .growth-bar {
+            background: #333;
+        }
+
+        .growth-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s;
+        }
+
         .card-summary {
             color: #666;
             margin-bottom: 15px;
             line-height: 1.5;
         }
 
+        body.dark-mode .card-summary {
+            color: #bbb;
+        }
+
         .btn-expand {
             width: 100%;
             padding: 10px;
-            background: #667eea;
+            background: var(--primary);
             color: white;
             border: none;
             border-radius: 6px;
@@ -202,7 +330,7 @@
         }
 
         .btn-expand:hover {
-            background: #764ba2;
+            background: var(--secondary);
         }
 
         .modal {
@@ -231,11 +359,17 @@
             max-height: 80vh;
             overflow-y: auto;
             animation: slideUp 0.3s ease-out;
+            position: relative;
+        }
+
+        body.dark-mode .modal-content {
+            background: var(--card-dark);
+            color: var(--text-light);
         }
 
         .modal-header {
             margin-bottom: 20px;
-            border-bottom: 2px solid #667eea;
+            border-bottom: 2px solid var(--primary);
             padding-bottom: 15px;
         }
 
@@ -244,16 +378,33 @@
             color: #333;
         }
 
+        body.dark-mode .modal-title {
+            color: white;
+        }
+
         .modal-close {
-            float: right;
+            position: absolute;
+            top: 15px;
+            right: 15px;
             font-size: 1.5em;
             cursor: pointer;
             color: #666;
             transition: all 0.3s;
+            background: none;
+            border: none;
+            padding: 0;
         }
 
         .modal-close:hover {
             color: #333;
+        }
+
+        body.dark-mode .modal-close {
+            color: #aaa;
+        }
+
+        body.dark-mode .modal-close:hover {
+            color: white;
         }
 
         .method-section {
@@ -261,12 +412,17 @@
             padding: 15px;
             background: #f8f9fa;
             border-radius: 8px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid var(--primary);
+        }
+
+        body.dark-mode .method-section {
+            background: #0a0a14;
+            border-left-color: var(--primary);
         }
 
         .method-title {
             font-weight: 700;
-            color: #667eea;
+            color: var(--primary);
             margin-bottom: 10px;
             font-size: 1.1em;
         }
@@ -274,6 +430,10 @@
         .method-data {
             color: #666;
             line-height: 1.6;
+        }
+
+        body.dark-mode .method-data {
+            color: #bbb;
         }
 
         .data-item {
@@ -294,6 +454,39 @@
             color: #999;
             padding: 40px;
             font-size: 1.1em;
+        }
+
+        .history-section {
+            margin-bottom: 30px;
+        }
+
+        .history-title {
+            color: white;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .history-list {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .history-tag {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .history-tag:hover {
+            background: white;
+            color: var(--primary);
         }
 
         @keyframes fadeIn {
@@ -332,7 +525,7 @@
                 font-size: 1.8em;
             }
 
-            input[type="text"] {
+            input[type="text"], select {
                 width: 100%;
             }
 
@@ -348,20 +541,41 @@
                 margin: 20px;
                 max-height: 90vh;
             }
+
+            .theme-toggle {
+                position: static;
+                margin-bottom: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
             <h1>🎯 Detector de Tendências</h1>
             <p class="subtitle">Encontre as tendências emergentes em tempo real</p>
         </header>
 
         <div class="controls">
-            <input type="text" id="nicheInput" placeholder="Exemplo: gaming, tech, crypto..." value="gaming">
+            <select id="nicheSelect" onchange="updateNiche()">
+                <option value="gaming">🎮 Gaming</option>
+                <option value="tech">💻 Tech</option>
+                <option value="crypto">₿ Crypto</option>
+            </select>
+            <input type="text" id="nicheInput" placeholder="Ou digite um nicho customizado..." value="gaming">
             <button class="btn-search" onclick="searchTrends()">Nova Busca</button>
             <button class="btn-more" id="moreBtn" onclick="generateMore()" disabled>Gerar Mais</button>
+        </div>
+
+        <div class="top-controls">
+            <button class="btn-icon" onclick="exportData()" title="Exportar como JSON">📥 Exportar</button>
+            <button class="btn-icon" onclick="showHistory()" title="Ver histórico">📋 Histórico</button>
+        </div>
+
+        <div id="history-section" class="history-section" style="display: none;">
+            <div class="history-title">📜 Últimas buscas:</div>
+            <div id="history-list" class="history-list"></div>
         </div>
 
         <div id="loading" class="loading" style="display: none;">
@@ -381,7 +595,7 @@
     <!-- Modal para detalhes -->
     <div id="modal" class="modal">
         <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
             <div class="modal-header">
                 <h2 class="modal-title" id="modalTitle"></h2>
             </div>
@@ -391,15 +605,69 @@
 
     <script>
         let currentTrends = [];
+        let favoriteIds = new Set();
+        let searchHistory = [];
+
+        // Carregar favorites e histórico do localStorage
+        window.addEventListener('load', () => {
+            const saved = localStorage.getItem('favorites');
+            if (saved) favoriteIds = new Set(JSON.parse(saved));
+            const hist = localStorage.getItem('history');
+            if (hist) searchHistory = JSON.parse(hist);
+            applyTheme();
+        });
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        function applyTheme() {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) document.body.classList.add('dark-mode');
+        }
+
+        function updateNiche() {
+            const select = document.getElementById('nicheSelect');
+            const input = document.getElementById('nicheInput');
+            input.value = select.value;
+        }
 
         async function searchTrends() {
             const niche = document.getElementById('nicheInput').value || 'gaming';
             await fetchTrends(niche);
+            addToHistory(niche);
         }
 
         async function generateMore() {
             const niche = document.getElementById('nicheInput').value || 'gaming';
             await fetchTrends(niche);
+            addToHistory(niche);
+        }
+
+        function addToHistory(niche) {
+            const timestamp = new Date().toLocaleString('pt-BR');
+            searchHistory.unshift({ niche, timestamp });
+            searchHistory = searchHistory.slice(0, 10);
+            localStorage.setItem('history', JSON.stringify(searchHistory));
+        }
+
+        function showHistory() {
+            const section = document.getElementById('history-section');
+            const list = document.getElementById('history-list');
+
+            if (searchHistory.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            list.innerHTML = searchHistory.map((item, idx) => `
+                <div class="history-tag" onclick="document.getElementById('nicheInput').value='${item.niche}'; searchTrends();" title="${item.timestamp}">
+                    ${item.niche}
+                </div>
+            `).join('');
+
+            section.style.display = 'block';
         }
 
         async function fetchTrends(niche) {
@@ -448,18 +716,29 @@
             grid.innerHTML = '';
 
             currentTrends.forEach(trend => {
+                const isFav = favoriteIds.has(trend.id);
+                const growthPercent = Math.min((trend.likelihood || 80) * 1.25, 100);
+
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `
                     <div class="card-header">
-                        <div class="card-title">${escapeHtml(trend.name)}</div>
-                        <div class="card-meta">
-                            <span class="badge badge-likelihood">📈 ${Math.round(trend.likelihood)}%</span>
-                            <span class="badge badge-platforms">🌐 ${trend.platforms} plataformas</span>
+                        <div style="flex: 1;">
+                            <div class="card-title">${escapeHtml(trend.name)}</div>
+                            <div class="card-meta">
+                                <span class="badge badge-likelihood">📈 ${Math.round(trend.likelihood || 80)}%</span>
+                                <span class="badge badge-platforms">🌐 ${trend.platforms || 1} plataformas</span>
+                            </div>
                         </div>
+                        <button class="star-btn ${isFav ? 'favorited' : ''}" onclick="toggleFavorite('${trend.id}')" title="Favoritar">
+                            ${isFav ? '⭐' : '☆'}
+                        </button>
+                    </div>
+                    <div class="growth-bar">
+                        <div class="growth-fill" style="width: ${growthPercent}%"></div>
                     </div>
                     <div class="card-summary">
-                        <strong>Status:</strong> ${escapeHtml(trend.growth)}<br>
+                        <strong>Status:</strong> ${escapeHtml(trend.growth || 'acelerando')}<br>
                         <strong>Métodos:</strong> ${trend.data ? Object.keys(trend.data).filter(k => Array.isArray(trend.data[k]) && trend.data[k].length > 0).length : 0} ativos
                     </div>
                     <button class="btn-expand" data-trend='${JSON.stringify(trend).replace(/'/g, "&apos;")}' onclick="openModalFromData(this)">
@@ -468,6 +747,16 @@
                 `;
                 grid.appendChild(card);
             });
+        }
+
+        function toggleFavorite(id) {
+            if (favoriteIds.has(id)) {
+                favoriteIds.delete(id);
+            } else {
+                favoriteIds.add(id);
+            }
+            localStorage.setItem('favorites', JSON.stringify([...favoriteIds]));
+            renderTrends();
         }
 
         function openModalFromData(button) {
@@ -519,16 +808,40 @@
             document.getElementById('modal').classList.remove('active');
         }
 
+        function exportData() {
+            if (currentTrends.length === 0) {
+                alert('Nenhuma tendência para exportar. Faça uma busca primeiro!');
+                return;
+            }
+
+            const jsonData = {
+                timestamp: new Date().toISOString(),
+                trends: currentTrends,
+                niche: document.getElementById('nicheInput').value
+            };
+
+            const dataStr = JSON.stringify(jsonData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `trends-${Date.now()}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
 
-        // Fechar modal ao clicar fora
         document.getElementById('modal').addEventListener('click', (e) => {
             if (e.target.id === 'modal') closeModal();
         });
+
+        // Mostrar histórico ao carregar
+        showHistory();
     </script>
 </body>
 </html>
