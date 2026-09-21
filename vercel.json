@@ -13,6 +13,6 @@
     }
   ],
   "env": {
-    "VIDIQ_API_KEY": "@vidiq_api_key"
+    "VIDIQ_API_KEY": "@VIDIQ_API_KEY"
   }
 }
