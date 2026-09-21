@@ -8,6 +8,7 @@ import { getGoogleAutocomplete, getYouTubeAutocomplete } from './apis/autocomple
 
 dotenv.config();
 
+// Production deployment
 const app = express();
 app.use(cors());
 app.use(express.json());
